@@ -7,7 +7,7 @@ enum DataURLTypes {
   JPEG = "image/jpeg",
 }
 
-// 将canvas转换成dataurl
+// 将canvas转换成dataURL
 const convertCanvasToDataURL = (
   canvas: HTMLCanvasElement,
   type: DataURLTypes,
@@ -32,7 +32,7 @@ const createImageElement = (src: string): Promise<HTMLImageElement> =>
     };
   });
 
-const waitAllImageLoadingCompelete = (
+const waitAllImageLoadingComplete = (
   imageDoms: HTMLImageElement[]
 ): Promise<any[]> =>
   Promise.all(
@@ -76,15 +76,15 @@ const computeCoverSize = (
     if (width1 > width2) {
       const newWidth = width2 * (1 + scaleRatio);
       const newHeight = height2 * (1 + scaleRatio);
-      const topOffset = (height2 - newHeight) / 2;
+      const topOffset = (height1 - newHeight) / 2;
       return { width: newWidth, height: newHeight, topOffset, leftOffset: 0 };
     } else if (width1 < width2) {
       const newWidth = width2 * (1 - scaleRatio);
       const newHeight = height2 * (1 - scaleRatio);
-      const topOffset = (height2 - newHeight) / 2;
+      const topOffset = (height1 - newHeight) / 2;
       return { width: newWidth, height: newHeight, topOffset, leftOffset: 0 };
     } else {
-      const topOffset = (height2 - height1) / 2;
+      const topOffset = (height1 - height2) / 2;
       return { width: width2, height: height2, topOffset, leftOffset: 0 };
     }
   } else if (ratio1 < ratio2) {
@@ -92,15 +92,15 @@ const computeCoverSize = (
     if (height1 > height2) {
       const newHeight = height2 * (1 + scaleRatio);
       const newWidth = width2 * (1 + scaleRatio);
-      const leftOffset = (newWidth - width1) / 2;
+      const leftOffset = (width1 - newWidth) / 2;
       return { width: newWidth, height: newHeight, topOffset: 0, leftOffset };
     } else if (height1 < height2) {
       const newHeight = height2 * (1 - scaleRatio);
       const newWidth = width2 * (1 - scaleRatio);
-      const leftOffset = (newWidth - width1) / 2;
+      const leftOffset = (width1 - newWidth) / 2;
       return { width: newWidth, height: newHeight, topOffset: 0, leftOffset };
     } else {
-      const leftOffset = (width2 - width1) / 2;
+      const leftOffset = (width1 - width2) / 2;
       return { width: width2, height: height2, topOffset: 0, leftOffset };
     }
   } else {
@@ -117,12 +117,14 @@ export const createGIF = gifshot.createGIF;
  * @description 向gif中添加滤镜，生成一个新的gif
  * @param gif gif的资源地址或带有gif的image元素对象
  * @param filter 滤镜的资源地址或带有滤镜图片的image元素对象
- * @returns Promise<new-gif-url>
+ * @returns Promise<new-gif-dataURL>
  */
 export const mixFilterToGIF = (
   gif: string | HTMLImageElement,
   filter: string | HTMLImageElement
-): Promise<any> => {
+): Promise<string | any> => {
+  let parentDom: HTMLElement | null;
+  let siblingDom: Node | null;
   let gifImageDom: HTMLImageElement;
   let filterImageDom: HTMLImageElement;
   let durationMsTimeTotal = 0;
@@ -132,9 +134,11 @@ export const mixFilterToGIF = (
     gifImageDom.src = gif;
   } else if (gif instanceof HTMLImageElement) {
     gifImageDom = gif;
+    parentDom = gifImageDom.parentElement;
+    siblingDom = gifImageDom.nextSibling;
   } else {
     throw new Error(
-      `the parameter 0 of mixFilterToGIF should be a url or HTMLImageElement`
+      `The parameter 0 of mixFilterToGIF should be a url or HTMLImageElement`
     );
   }
   if (typeof filter === "string") {
@@ -144,31 +148,36 @@ export const mixFilterToGIF = (
     filterImageDom = filter;
   } else {
     throw new Error(
-      `the parameter 1 of mixFilterToGIF should be a url or HTMLImageElement`
+      `The parameter 1 of mixFilterToGIF should be a url or HTMLImageElement`
     );
   }
   if (gifImageDom !== null && filterImageDom !== null) {
     gifImageDom.crossOrigin = "Anonymous";
     filterImageDom.crossOrigin = "Anonymous";
-    return waitAllImageLoadingCompelete([gifImageDom, filterImageDom])
+    return waitAllImageLoadingComplete([gifImageDom, filterImageDom])
       .then((imageDoms) => {
-        const coverSize = computeCoverSize(imageDoms[0], imageDoms[1]);
-        const { width: gifWidth, height: gifHeight } = imageDoms[0];
+        const filterCoverSize = computeCoverSize(imageDoms[0], imageDoms[1]);
+        const { width: gifOriginalWidth, height: gifOriginalHeight } =
+          imageDoms[0];
+        const styles = window.getComputedStyle(imageDoms[0]);
+        const gifWidth = parseFloat(styles.width as string);
+        const gifHeight = parseFloat(styles.height as string);
         const {
           width: filterImageWidth,
           height: filterImageHeight,
           topOffset,
           leftOffset,
-        } = coverSize;
+        } = filterCoverSize;
         const rub: SuperGif = new SuperGif({
           gif: gifImageDom,
-          max_width: (window.innerWidth / 1920) * 800,
+          max_width: gifWidth,
         });
         return new Promise((resolve, reject) => {
           rub.load(() => {
             const imageLength = rub.get_length();
             const waitQueue = [];
             durationMsTimeTotal = rub.get_duration_ms();
+            // 对每帧图片进行滤镜合成，异步
             for (let i = 0; i < imageLength; i++) {
               rub.move_to(i);
               const imageUrl = convertCanvasToDataURL(
@@ -182,7 +191,13 @@ export const mixFilterToGIF = (
                     canvas.width = gifWidth;
                     canvas.height = gifHeight;
                     const context = canvas.getContext("2d");
-                    context!.drawImage(imageDom, 0, 0, gifWidth, gifHeight);
+                    context!.drawImage(
+                      imageDom,
+                      0,
+                      0,
+                      gifOriginalWidth,
+                      gifOriginalHeight
+                    );
                     context!.drawImage(
                       filterImageDom,
                       leftOffset,
@@ -198,7 +213,7 @@ export const mixFilterToGIF = (
                   })
                   .catch((e) => {
                     console.error(
-                      `the ${
+                      `The ${
                         i + 1
                       }st image of gif when created imageElement occurred error:`
                     );
@@ -207,8 +222,9 @@ export const mixFilterToGIF = (
                   })
               );
             }
+            // 合成完成后合并成新gif
             Promise.all(waitQueue).then(() => {
-              gifshot.createGIF(
+              createGIF(
                 {
                   images: handledImageURLList,
                   gifWidth,
@@ -234,13 +250,27 @@ export const mixFilterToGIF = (
       })
       .catch((e) => {
         console.error(
-          "a error occured when waitAllImageLoadingCompelete called:"
+          "An error occurred when waitAllImageLoadingComplete called:"
         );
         console.error(e);
         return Promise.reject(e);
+      })
+      .finally(() => {
+        // 原来的gifDom会被SuperGif替换为canvas，为了能重复调用本函数，需要在完成后再换回来
+        if (parentDom) {
+          if (siblingDom) {
+            const currentGifCanvasDom = siblingDom.previousSibling;
+            if (currentGifCanvasDom) {
+              parentDom.removeChild(currentGifCanvasDom);
+              parentDom.insertBefore(gifImageDom, siblingDom);
+            }
+          } else {
+            parentDom.appendChild(gifImageDom);
+          }
+        }
       });
   } else {
-    const errorMessage = "the parameters of mixFilterToGIF are not valid type";
+    const errorMessage = "The parameters of mixFilterToGIF are not valid type";
     console.error(errorMessage);
     return Promise.reject(errorMessage);
   }

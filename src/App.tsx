@@ -1,13 +1,19 @@
-import { useEffect, useRef, useState } from "react";
-import "./App.css";
+import { useCallback, useEffect, useRef, useState } from "react";
+import "./App.less";
 import { mixFilterToGIF } from "./colorfulGif/index";
-import gif from "./assets/test.gif";
+import { Upload, Loading } from "./components/index";
+import default_gif from "./assets/default_gif.gif";
+import default_filter from "./assets/default_filter.png";
+
+const DEFAULT_GIF = default_gif;
+const DEFAULT_FILTER = default_filter;
 
 function App() {
+  const [gif, setGif] = useState(DEFAULT_GIF);
+  const [filter, setFilter] = useState(DEFAULT_FILTER);
+  const [handledGifURL, setHandledGifURL] = useState("");
   const gifImgRef = useRef<HTMLImageElement>(null);
   const filterImgRef = useRef<HTMLImageElement>(null);
-
-  const [handledGifURL, setHandledGifURL] = useState("");
 
   useEffect(() => {
     if (gifImgRef.current !== null && filterImgRef.current !== null) {
@@ -17,43 +23,74 @@ function App() {
     }
   }, []);
 
+  const handleCreateClick = useCallback(() => {
+    if (gifImgRef.current !== null && filterImgRef.current !== null) {
+      setHandledGifURL("");
+      mixFilterToGIF(gifImgRef.current, filterImgRef.current).then((newGIF) => {
+        setHandledGifURL(newGIF);
+      });
+    }
+  }, []);
+
   return (
-    <main>
-      <img
-        ref={gifImgRef}
-        src={gif}
-        className="App-logo image"
-        alt="gif"
-        width={(window.innerWidth / 1920) * 400}
-        // height={(window.innerWidth / 1920) * 600}
-      />
-      <img
-        ref={filterImgRef}
-        src="https://c-ssl.duitang.com/uploads/ops/202111/01/20211101171357_e1d6a.png"
-        alt="filter"
-        className="image"
-        width={(window.innerWidth / 1920) * 400}
-        // height={(window.innerWidth / 1920) * 600}
-      />
-      <img
-        src={handledGifURL}
-        className="image"
-        alt="handled-gif"
-        width={(window.innerWidth / 1920) * 400}
-        // height={(window.innerWidth / 1920) * 600}
-      />
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </main>
+    <>
+      <header className="header">
+        <h3>滤镜gif Demo</h3>
+        <p>也可以自己上传gif和滤镜图片，然后点击『生成』按钮试试</p>
+        <p className="tip">* 滤镜图片必须带有透明度</p>
+      </header>
+      <main className="main">
+        <section className="section">
+          <img
+            ref={gifImgRef}
+            src={gif}
+            className="App-logo image"
+            alt="gif"
+            width={(window.innerWidth / 1920) * 400}
+          />
+          <div className="bottom">
+            <span>gif: </span>
+            <Upload
+              style={{ width: "calc(100% - 30px)" }}
+              accept="image/gif"
+              onChange={(dataURL) => {
+                setGif(dataURL);
+              }}
+            />
+          </div>
+        </section>
+        <section className="section">
+          <img ref={filterImgRef} src={filter} alt="filter" className="image" />
+          <div className="bottom">
+            <span>png: </span>
+            <Upload
+              style={{ width: "calc(100% - 40px)" }}
+              accept="image/png"
+              onChange={(dataURL) => {
+                setFilter(dataURL);
+              }}
+            />
+          </div>
+        </section>
+        <section className="section">
+          {handledGifURL ? (
+            <>
+              <img src={handledGifURL} className="image" alt="handled-gif" />
+            </>
+          ) : (
+            <div className="loading-wrapper">
+              <Loading type="ring" text="生成中" />
+            </div>
+          )}
+          <p className="bottom">输出结果</p>
+        </section>
+      </main>
+      <footer className="footer">
+        <button className="button" onClick={handleCreateClick}>
+          生成
+        </button>
+      </footer>
+    </>
   );
 }
 
