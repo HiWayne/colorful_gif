@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# This is a tool that can mix filter to gif, then create a new gif dataURL.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> ## 这是一个可以把滤镜图片混合进 gif 的库，它会返回一个新的 gif dataURL
 
-## Available Scripts
+## Demo preview
 
-In the project directory, you can run:
+## Usage 使用
 
-### `npm start`
+#### First 第一步
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```shell
+npm i colorful_gif
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Second 第二步
 
-### `npm test`
+You just need pass `gif_url`(such as `https://xxx.gif`) and `filter_url`(such as `https://yyy.png`) to `mixFilterToGIF` function ( It is important to note that the url must allow cross-origin! ).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+> 你只需要向 `mixFilterToGIF` 函数分别传 gif url 和 滤镜 url 就可以了（务必注意 url 必须允许跨域！）
 
-### `npm run build`
+```js
+import { mixFilterToGIF } from "colorful_gif";
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+mixFilterToGIF("xxx.gif", "yyy.png").then((newGIFDataURL) => {
+  // this will output new gif dataURL 这里将打印出一个新的gif dataURL
+  console.log(newGIFDataURL);
+});
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Also you can pass HTMLImageElement to `mixFilterToGIF` function. Look at example below:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> 或者你可以给 `mixFilterToGIF` 函数传入 image 元素，请看下面的例子：
 
-### `npm run eject`
+Assume you have a html file like this:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+> 假设你有一个像下面这样的 HTML：
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```html
+<img id="gif" src="https://xxx.gif" />
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<img id="filter" src="https://xxx.png" />
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<img id="result" src="" />
+```
 
-## Learn More
+You can do this in JavaScript file:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+> 你可以在 JavaScript 里面这样做：
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```js
+import { mixFilterToGIF } from "colorful_gif";
 
-### Code Splitting
+mixFilterToGIF(
+  document.querySelector("#gif"),
+  document.querySelector("#filter")
+).then((newGIFDataURL) => {
+  // this will output new gif dataURL 这里将打印出一个新的gif dataURL
+  console.log(newGIFDataURL);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  const resultImage = document.querySelector("#result");
+  resultImage.src = newGIFDataURL;
+});
+```
 
-### Analyzing the Bundle Size
+Finally, the `img` element what's id is `result` will show a new gif with filter.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> 最终，`id` 为 `result` 的 `img` 元素会展示新的带有滤镜的 gif。
