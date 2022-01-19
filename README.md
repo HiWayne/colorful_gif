@@ -83,7 +83,7 @@ mixFilterToGIF(
   document.querySelector("#gif"),
   document.querySelector("#filter")
 ).then((newGIFDataURL) => {
-  // this will output new gif dataURL 这里将打印出一个新的gif dataURL
+  // this will output new gif dataURL
   console.log(newGIFDataURL);
 
   // give this url to an image element
