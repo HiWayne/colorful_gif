@@ -1,33 +1,24 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import "./App.less";
 import { mixFilterToGIF } from "./colorfulGif/index";
 import { Upload, Loading } from "./components/index";
-import default_gif from "./assets/default_gif.gif";
-import default_filter from "./assets/default_filter.png";
-
-const DEFAULT_GIF = default_gif;
-const DEFAULT_FILTER = default_filter;
+import { default as DEFAULT_GIF } from "./assets/default_gif.gif";
+import { default as DEFAULT_FILTER } from "./assets/default_filter.png";
 
 function App() {
   const [gif, setGif] = useState(DEFAULT_GIF);
   const [filter, setFilter] = useState(DEFAULT_FILTER);
   const [handledGifURL, setHandledGifURL] = useState("");
+  const [isLoading, setLoading] = useState(false);
   const gifImgRef = useRef<HTMLImageElement>(null);
   const filterImgRef = useRef<HTMLImageElement>(null);
 
-  useEffect(() => {
-    if (gifImgRef.current !== null && filterImgRef.current !== null) {
-      mixFilterToGIF(gifImgRef.current, filterImgRef.current).then((newGIF) => {
-        setHandledGifURL(newGIF);
-      });
-    }
-  }, []);
-
   const handleCreateClick = useCallback(() => {
     if (gifImgRef.current !== null && filterImgRef.current !== null) {
-      setHandledGifURL("");
+      setLoading(true);
       mixFilterToGIF(gifImgRef.current, filterImgRef.current).then((newGIF) => {
         setHandledGifURL(newGIF);
+        setLoading(false);
       });
     }
   }, []);
@@ -35,8 +26,8 @@ function App() {
   return (
     <>
       <header className="header">
-        <h3>滤镜gif Demo</h3>
-        <p>也可以自己上传gif和滤镜图片，然后点击『生成』按钮试试</p>
+        <h3>滤镜gif Demo，点击『生成』按钮试试吧</h3>
+        <p>你也可以自己上传gif和滤镜图片</p>
         <p className="tip">* 滤镜图片必须带有透明度</p>
       </header>
       <main className="main">
@@ -73,14 +64,16 @@ function App() {
           </div>
         </section>
         <section className="section">
-          {handledGifURL ? (
+          {isLoading ? (
+            <div className="loading-wrapper">
+              <Loading type="ring" text="生成中" />
+            </div>
+          ) : handledGifURL ? (
             <>
               <img src={handledGifURL} className="image" alt="handled-gif" />
             </>
           ) : (
-            <div className="loading-wrapper">
-              <Loading type="ring" text="生成中" />
-            </div>
+            <div className="loading-wrapper"></div>
           )}
           <p className="bottom">输出结果</p>
         </section>
