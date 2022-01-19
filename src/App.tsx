@@ -40,7 +40,8 @@ function App() {
       <header className="header">
         <h3>滤镜gif Demo，点击『生成』按钮试试吧</h3>
         <p>你也可以自己上传gif和滤镜图片</p>
-        <p className="tip">* 滤镜图片必须带有透明度</p>
+        <p className="tip">* 第一张图片必须是gif</p>
+        <p className="tip">* 滤镜图片必须是带有透明度的png</p>
       </header>
       <main className="main">
         <section className="section">
