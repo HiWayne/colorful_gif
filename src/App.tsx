@@ -23,6 +23,18 @@ function App() {
     }
   }, []);
 
+  const download = useCallback(() => {
+    if (handledGifURL) {
+      const downloadDom = document.createElement("a");
+      // 此属性的值就是下载时图片的名称，注意，名称中不能有半角点，否则下载时后缀名会错误
+      downloadDom.setAttribute("download", "transformed_gif.gif");
+      downloadDom.href = handledGifURL;
+      downloadDom.click();
+    } else {
+      alert("not found transformed gif");
+    }
+  }, [handledGifURL]);
+
   return (
     <>
       <header className="header">
@@ -75,7 +87,16 @@ function App() {
           ) : (
             <div className="loading-wrapper"></div>
           )}
-          <p className="bottom">输出结果</p>
+          <div className="bottom">
+            输出结果
+            <button
+              className="button"
+              style={{ marginLeft: "10px" }}
+              onClick={download}
+            >
+              下载至本地
+            </button>
+          </div>
         </section>
       </main>
       <footer className="footer">
