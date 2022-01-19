@@ -12,7 +12,7 @@
 
 ## Usage
 
-<br />
+> support esm 、commonjs and umd
 
 #### First
 
@@ -32,6 +32,10 @@ You just need pass `gif url`(such as `https://xxx.gif`) and `filter url`(such as
 
 ```js
 import { mixFilterToGIF } from "colorful_gif";
+// if in commonjs, use:
+// const { mixFilterToGIF } = require("colorful_gif")
+// if import from <script src="**/colorful_gif.min.js" />, use directly:
+// window.ColorfulGif.mixFilterToGIF
 
 mixFilterToGIF("xxx.gif", "yyy.png").then((newGIFDataURL) => {
   // this will output new gif dataURL
