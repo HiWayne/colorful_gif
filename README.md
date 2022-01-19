@@ -2,7 +2,7 @@
 
 > ## 这是一个可以把滤镜图片混合进 gif 的库，它会返回一个新的 gif dataURL
 
-## Demo preview([access](<(https://hiwayne.github.io/colorful_gif/site)>))
+## Demo preview([access](https://hiwayne.github.io/colorful_gif/site))
 
 \* The size of demo's gif-resource below is about 10.5MB, maybe load very slow. You can also access [online-website](https://hiwayne.github.io/colorful_gif/site), that's faster and can test effect whatever you want. Or git clone this project and run `npm i && npm run start`
 
