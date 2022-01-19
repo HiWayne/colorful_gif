@@ -1,6 +1,6 @@
 {
   "name": "colorful_gif",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "es/type.d.ts",
