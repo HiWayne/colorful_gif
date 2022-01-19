@@ -77,5 +77,10 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
-  "homepage": "/colorful_gif/site"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HiWayne/colorful_gif",
+    "directory": "src/colorfulGif"
+  },
+  "homepage": "https://hiwayne.github.io/colorful_gif/site"
 }
