@@ -8,7 +8,14 @@
 
 You can generate a lot of nice or meaningful gif with it. For example, in the demo, I let a person walking with an umbrella become a walk in the clouds. You can also realize your own inspiration. For example, if the icon position in the filter is appropriate, you can watermark the gif, etc...
 
+You can also make gif from scratch (Ability from gitshot):
+
+For example, you have several pictures in your hand, you want them to move like a gif, and you can set the interval time. Or you have a video and you want it to turn into a gif. Or you can make a funny emoji in front of the computer camera, and it can help you make a gif emoji.
+
+
 > 你可以通过它生成很多好看或有意义的 gif。比如在 Demo 中我就让一个撑伞走路的人，变成了在云中漫步。你也可以实现自己的灵感。比如如果滤镜中的 icon 位置合适的话，就可以做到给 gif 打水印等等……
+> 你也可以从零开始制作 gif（来自gifshot的能力）：
+> 比如你手里头有数张图片，你希望它们像 gif 一样动起来，并且可以设置间隔时间。或者你有一个视频，你希望它能变成 gif。再或者你可以在电脑摄像头面前做一个搞怪表情，它可以帮你制成 gif 表情包。
 
 <br />
 
