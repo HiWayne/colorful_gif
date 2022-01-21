@@ -1,12 +1,16 @@
-# This is a tool that can mix filter to gif, then create a new gif dataURL.Provides an [online site](https://hiwayne.github.io/colorful_gif/site) to try. You can also convert some pictures, videos, or even computer camera live recordings into gif using the exported createGIF method!
+# This is a tool that can mix filter to gif, then create a new gif dataURL. Provides an [online site](https://hiwayne.github.io/colorful_gif/site) to try. You can also convert some pictures, videos, or even computer camera live recordings into gif using the exported createGIF method!
 
 > ## 这是一个可以把滤镜图片混合进 gif 的库，它会返回一个新的 gif dataURL。提供了一个[在线站点](https://hiwayne.github.io/colorful_gif/site)可以试用。你还可以利用导出的 createGIF 方法把多张图片、视频、甚至电脑摄像头的实时录制转换成 gif！
 
+<br />
+
 ## Application scenarios
 
-You can generate a lot of nice or meaningful gifs with it. For example, in the demo, I let a person walking with an umbrella become a walk in the clouds. You can also realize your own inspiration. For example, if the icon position in the filter is appropriate, you can watermark the gif, etc...
+You can generate a lot of nice or meaningful gif with it. For example, in the demo, I let a person walking with an umbrella become a walk in the clouds. You can also realize your own inspiration. For example, if the icon position in the filter is appropriate, you can watermark the gif, etc...
 
 > 你可以通过它生成很多好看或有意义的 gif。比如在 Demo 中我就让一个撑伞走路的人，变成了在云中漫步。你也可以实现自己的灵感。比如如果滤镜中的 icon 位置合适的话，就可以做到给 gif 打水印等等……
+
+<br />
 
 ## Demo preview([access](https://hiwayne.github.io/colorful_gif/site))
 
@@ -15,6 +19,8 @@ You can generate a lot of nice or meaningful gifs with it. For example, in the d
 `* 演示的动图大小大约有10.5MB，可能加载的很慢。你还可以访问可操作的站点https://hiwayne.github.io/colorful_gif/site，它可以更快打开并且可以任意测试上传的图片然后下载，或者git clone本项目然后运行npm i && npm run start`
 
 ![Demo GIF](https://user-images.githubusercontent.com/42726028/150064941-2ec4e27a-67cc-4005-bbb1-9fdac163e1d6.gif)
+
+<br />
 
 ## Usage
 
@@ -25,6 +31,8 @@ You can generate a lot of nice or meaningful gifs with it. For example, in the d
 ```shell
 npm i colorful_gif
 ```
+
+<br />
 
 #### Second
 
