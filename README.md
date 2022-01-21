@@ -89,9 +89,9 @@ Assume you have a html file like this:
 
 <br />
 
-You can do this in JavaScript file:
+Then you can do this in JavaScript file:
 
-> 你可以在 JavaScript 里面这样做：
+> 然后你可以在 JavaScript 里面这样做：
 
 <br />
 
@@ -123,7 +123,7 @@ In the end, the `img` element what's id is `result` will show a new gif with fil
 
 <br />
 
-You can convert some pictures, videos, or even computer camera recordings into gif using the `createGIF` function. `createGIF` comes from `gifshot.createGIF`. Please refer to [https://github.com/yahoo/gifshot](https://github.com/yahoo/gifshot) for specific usage
+You can also convert some pictures, videos, or even computer camera recordings into gif using the `createGIF` function. `createGIF` comes from `gifshot.createGIF`. Please refer to [https://github.com/yahoo/gifshot](https://github.com/yahoo/gifshot) for specific usage
 
 > 你还可以利用 `createGIF` 函数把多张图片、视频、甚至电脑摄像头的录制转换成 gif。`createGIF` 来源于 `gifshot.createGIF`。具体用法请参考 [https://github.com/yahoo/gifshot](https://github.com/yahoo/gifshot)
 
