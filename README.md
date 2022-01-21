@@ -4,7 +4,7 @@
 
 <br />
 
-## Application scenarios
+## Application scenarios (应用场景)
 
 You can generate a lot of nice or meaningful gif with it. For example, in the demo, I let a person walking with an umbrella become a walk in the clouds. You can also realize your own inspiration. For example, if the icon position in the filter is appropriate, you can watermark the gif, etc...
 
@@ -12,7 +12,7 @@ You can generate a lot of nice or meaningful gif with it. For example, in the de
 
 <br />
 
-## Demo preview([access](https://hiwayne.github.io/colorful_gif/site))
+## Demo preview([access](https://hiwayne.github.io/colorful_gif/site)) 演示
 
 \* The size of demo's gif-resource below is about 10.5MB, maybe load very slow. You can also access [operational-website](https://hiwayne.github.io/colorful_gif/site), that's faster and can test image whatever you want and download. Or git clone this project and run `npm i && npm run start`
 
@@ -22,7 +22,7 @@ You can generate a lot of nice or meaningful gif with it. For example, in the de
 
 <br />
 
-## Usage
+## Usage (使用)
 
 > support esm 、commonjs and umd
 
