@@ -26,6 +26,8 @@ You can generate a lot of nice or meaningful gif with it. For example, in the de
 
 > support esm 、commonjs and umd
 
+<br />
+
 #### First
 
 ```shell
