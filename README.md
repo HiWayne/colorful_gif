@@ -1,6 +1,6 @@
-# This is a tool that can mix filter to gif, then create a new gif dataURL.Provides an [online site](https://hiwayne.github.io/colorful_gif/site) to try
+# This is a tool that can mix filter to gif, then create a new gif dataURL.Provides an [online site](https://hiwayne.github.io/colorful_gif/site) to try. You can also convert some pictures, videos, or even computer camera recordings into gif using the exported createGIF method!
 
-> ## 这是一个可以把滤镜图片混合进 gif 的库，它会返回一个新的 gif dataURL。提供了一个[在线站点](https://hiwayne.github.io/colorful_gif/site)可以试用。
+> ## 这是一个可以把滤镜图片混合进 gif 的库，它会返回一个新的 gif dataURL。提供了一个[在线站点](https://hiwayne.github.io/colorful_gif/site)可以试用。你还可以利用导出的 createGIF 方法把多张图片、视频、甚至电脑摄像头的录制转换成 gif！
 
 ## Application scenarios
 
@@ -103,3 +103,20 @@ mixFilterToGIF(
 In the end, the `img` element what's id is `result` will show a new gif with filter.
 
 > 最终，`id` 为 `result` 的 `img` 元素会展示新的带有滤镜的 gif。
+
+<br />
+
+You can convert some pictures, videos, or even computer camera recordings into gif using the `createGIF` function. `createGIF` comes from `gifshot.createGIF`. Please refer to [https://github.com/yahoo/gifshot](https://github.com/yahoo/gifshot) for specific usage
+
+> 你还可以利用 `createGIF` 函数把多张图片、视频、甚至电脑摄像头的录制转换成 gif。`createGIF` 来源于 `gifshot.createGIF`。具体用法请参考 [https://github.com/yahoo/gifshot](https://github.com/yahoo/gifshot)
+
+```js
+import { createGIF } from "colorful_gif";
+
+// createGIF comes from gifshot.createGIF
+// About gifshot, you can view https://github.com/yahoo/gifshot
+```
+
+<br />
+
+Finally thanks for **[gifshot](https://github.com/yahoo/gifshot)** and **[libgif](https://github.com/kelyvin/libgif-js)**(forked from https://github.com/buzzfeed/libgif-js)
